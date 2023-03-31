@@ -12,7 +12,7 @@
 <body>
     <?php
         // Iniciar todas as variaveis vazias 
-        $nomeErro = $emailErro = $generoErro = "";
+        $nomeErro = $emailErro = $generoErro = $webSiteErro =  "";
         $nome = $email = $genero = $comentarios = $webSite = "";
         
         if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -20,30 +20,23 @@
             if(empty($_POST["nome"])){
                 $nomeErro = "Campo Nome é Obrigatorio!";
             }else{
+                $nome = teste_input($_POST["nome"]);
                 if(!preg_match("/^[a-zA-Z-' ]*$/", $nome)){
                     $nomeErro = "Somente letras e espaços em branco são permitidos!";
-                }else{
-                    $nome = teste_input($_POST["nome"]);
                 }
-                
             }
-
             if(empty($_POST["email"])){
                 $emailErro = "Campo E-mail é Obrigatorio!";
             }else{
+                $email = teste_input($_POST["email"]);
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     $emailErro = "Formato de email inválido!";
-                }
-                    $email = teste_input($_POST["email"]);
+                }    
             }
 
             if(empty($_POST["genero"])){
                 $generoErro = "Campo Genero é Obrigatorio!";
             }else{
-                if(!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$webSite)){
-                    $generoErro = "URL inválida";
-                }
-                
                 $genero = teste_input($_POST["genero"]);
             }
 
@@ -57,6 +50,9 @@
                 $webSite = "";
             }else{
                 $webSite = teste_input($_POST["webSite"]);
+                if(!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$webSite)){
+                    $webSiteErro = "URL inválida";
+                }
             }
 
         }
@@ -71,20 +67,22 @@
     <h2>Exemplo de Formulario em PHP</h2>
     <p class="erro"><span>* São campos obrigatorios</span></p>
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-        Nome: <input type="text" name="nome">
+        
+        Nome: <input type="text" name="nome" value="<?php echo $nome?>">
         <span class="erro">* <?php echo $nomeErro; ?></span><br><br>
         
-        E-mail: <input type="text" name="email">
+        E-mail: <input type="text" name="email" value="<?php echo $email?>">
         <span class="erro">* <?php echo $emailErro; ?></span><br><br>
         
-        Site: <input type="text" name="webSite"><br><br>
+        Site: <input type="text" name="webSite" value="<?php echo $webSite?>">
+        <span class="erro">* <?php echo $webSiteErro; ?></span><br><br>
         
-        Comentarios: <textarea name="comentarios" rows="5" cols="40"></textarea> <br><br>
+        Comentarios: <textarea name="comentarios" rows="5" cols="40"><?php echo $comentarios?></textarea> <br><br>
         
         Genero: 
-        <input type="radio" name="genero" value="feminino"> Feminino
-        <input type="radio" name="genero" value="masculino"> Masculino 
-        <input type="radio" name="genero" value="outro"> Outro 
+        <input type="radio" name="genero" <?php if(isset($genero) && $genero == "feminino") echo "checked"?> value="feminino"> Feminino
+        <input type="radio" name="genero" <?php if(isset($genero) && $genero == "masculino") echo "checked"?> value="masculino"> Masculino 
+        <input type="radio" name="genero" <?php if(isset($genero) && $genero == "outro") echo "checked"?> value="outro"> Outro 
         <span class="erro">* <?php echo $generoErro; ?></span><br><br>
         
         <input type="submit" name="submit" value="Submit">
