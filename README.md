@@ -1,2 +1,2 @@
 # Estudos
-Repositório  para arquivos de estudos em geral. 
+- Repositório com arquivos de estudos em geral sobre desenvolvimento. 
