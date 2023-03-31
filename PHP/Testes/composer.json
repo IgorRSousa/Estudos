@@ -1,0 +1,10 @@
+{
+    "name": "igor/teste",
+    "autoload": {
+        "psr-4": {
+            "Igor\\": "src/",
+            "Pasta\\": "biblio/"
+        }
+    },
+    "require": {}
+}
