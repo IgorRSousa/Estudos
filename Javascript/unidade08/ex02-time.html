@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Aulas de Javascript</title>
+        <script>
+            function retornarDoisDigitos(tempo){
+                if(tempo < 10){
+                    return "0"+tempo
+                }else{
+                    return tempo
+                }
+
+            }
+            
+            
+            var agora = new Date();
+            console.log(retornarDoisDigitos(agora.getHours()) + ":"+retornarDoisDigitos(agora.getMinutes())+":"+retornarDoisDigitos(agora.getSeconds()));
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>
